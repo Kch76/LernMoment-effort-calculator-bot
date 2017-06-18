@@ -19,12 +19,6 @@ namespace EffortCalculator
 
             client.Credentials = authToken;
 
-            IReadOnlyList<Issue> issues = client.Issue.GetAllForCurrent(;// .GetAwaiter().GetResult();
-            foreach (var item in issues)
-            {
-                Console.WriteLine(item.Repository.Name + " - " + item.Title);
-            }
-
             var relevantIssuesRequest = new SearchIssuesRequest("Aufwand:")
             {
                 Involves = "suchja",
