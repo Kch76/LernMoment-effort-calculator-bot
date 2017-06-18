@@ -1,5 +1,6 @@
 ﻿using Octokit;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace EffortCalculator
 {
     class Program
     {
+        static ConcurrentBag<Issue> potentialIssues = new ConcurrentBag<Issue>();
+
         static void Main(string[] args)
         {
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
@@ -19,7 +22,7 @@ namespace EffortCalculator
 
             client.Credentials = authToken;
 
-            var relevantIssuesRequest = new SearchIssuesRequest("Aufwand:")
+            var relevantIssuesRequest = new SearchIssuesRequest("Aufwand: ")
             {
                 Involves = "suchja",
                 Type = IssueTypeQualifier.Issue,
@@ -29,23 +32,36 @@ namespace EffortCalculator
 
             SearchIssuesResult openRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
 
-            Console.WriteLine("Open Issues: ");
-            foreach (Issue item in openRelevantIssues.Items)
+            Parallel.ForEach<Issue>(openRelevantIssues.Items, i =>
             {
-                Console.WriteLine(item.Id + " - " + item.Title);
-            }
+                potentialIssues.Add(GetCompleteIssue(client.Issue, i));
+            });
 
             relevantIssuesRequest.State = ItemState.Closed;
             SearchIssuesResult closedRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
-
-            Console.WriteLine("Closed Issues: ");
-            foreach (Issue item in closedRelevantIssues.Items)
+            Parallel.ForEach<Issue>(closedRelevantIssues.Items, i =>
             {
-                Console.WriteLine(item.Id + " - " + item.Title);
-            }
+                potentialIssues.Add(GetCompleteIssue(client.Issue, i));
+            });
 
+            foreach (var issue in potentialIssues)
+            {
+                Console.WriteLine(issue.Repository.Name + " - #" + issue.Number + " - " + issue.State + " - " + issue.Title);
+            }
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
+        }
+
+        private static Issue GetCompleteIssue(IIssuesClient client, Issue incompleteIssue)
+        {
+            string[] repoUrlSegments = incompleteIssue.Url.Segments;
+            string repoOwnerName = repoUrlSegments[2].TrimEnd('/');
+            string repoName = repoUrlSegments[3].TrimEnd('/');
+
+            Issue completeIssue = null;
+            completeIssue = client.Get(repoOwnerName, repoName, incompleteIssue.Number).GetAwaiter().GetResult();
+
+            return completeIssue;
         }
 
         private static string RequestAccessTokenFromUser()
