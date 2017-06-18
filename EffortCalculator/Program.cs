@@ -22,7 +22,7 @@ namespace EffortCalculator
             string token = Properties.Settings.Default.AccessToken;
 
             Console.WriteLine("*** Personal Access Token Eingabe ***");
-            Console.Write("Soll der gespeichert Token: {0} verwendet werden? (ja/nein): ", token);
+            Console.Write("Soll der gespeichert Token: {0} verwendet werden? (ja/nein): ", HidePartsOfToken(token));
             string retrieveNewKey = Console.ReadLine();
 
             if (retrieveNewKey.ToLower().Equals("nein"))
@@ -38,5 +38,16 @@ namespace EffortCalculator
             return token;
         }
 
+        private static string HidePartsOfToken(string token)
+        {
+            StringBuilder sbToken = new StringBuilder(token);
+
+            for (int i = 4; i < token.Length - 4; i++)
+            {
+                sbToken[i] = '*';
+            }
+
+            return sbToken.ToString();
+        }
     }
 }
