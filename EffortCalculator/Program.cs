@@ -31,10 +31,6 @@ namespace EffortCalculator
             SearchIssuesResult openRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
             potentialIssues.AddRange(openRelevantIssues.Items);
 
-            relevantIssuesRequest.State = ItemState.Closed;
-            SearchIssuesResult closedRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
-            potentialIssues.AddRange(closedRelevantIssues.Items);
-
             foreach (var issue in potentialIssues)
             {
                 OutputIssue(issue);
