@@ -10,6 +10,7 @@ namespace EffortCalculator
     class Program
     {
         static List<Issue> potentialIssues = new List<Issue>();
+        static List<IssueComment> potentialComments = new List<IssueComment>();
 
         static void Main(string[] args)
         {
@@ -34,7 +35,29 @@ namespace EffortCalculator
             foreach (var issue in potentialIssues)
             {
                 OutputIssue(issue);
+                IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
+
+                foreach (var item in comments)
+                {
+                    if (item.Body.Contains("Aufwand: "))
+                    {
+                        Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
+                        Console.Write("Ist dies ein gültiger Kommentar für die Aufwandsabschätzung (j/n)? ");
+                        ConsoleKeyInfo selection = Console.ReadKey();
+                        if (selection.Key == ConsoleKey.J)
+                        {
+                            potentialComments.Add(item);
+                        }
+                    }
+                }
             }
+
+            Console.WriteLine("Hier nochmals die ausgewählten Kommentare: ");
+            foreach (var item in potentialComments)
+            {
+                Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
+            }
+
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
         }
@@ -45,6 +68,15 @@ namespace EffortCalculator
             string repoName = repoUrlSegments[3].TrimEnd('/');
 
             Console.WriteLine(repoName + " - #" + issue.Number + " - " + issue.State + " - " + issue.Title);
+        }
+
+        private static IReadOnlyCollection<IssueComment> GetPotentialComments(IIssueCommentsClient client, Issue issue)
+        {
+            string[] repoUrlSegments = issue.Url.Segments;
+            string ownerName = repoUrlSegments[2].TrimEnd('/');
+            string repoName = repoUrlSegments[3].TrimEnd('/');
+
+            return client.GetAllForIssue(ownerName, repoName, issue.Number).GetAwaiter().GetResult();
         }
 
         private static string RequestAccessTokenFromUser()
