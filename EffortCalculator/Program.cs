@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,42 @@ namespace EffortCalculator
         {
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
             string accessToken = RequestAccessTokenFromUser();
+
+            var client = new GitHubClient(new ProductHeaderValue("Issue-Test-Client"));
+            var authToken = new Credentials(accessToken);
+
+            client.Credentials = authToken;
+
+            IReadOnlyList<Issue> issues = client.Issue.GetAllForCurrent(;// .GetAwaiter().GetResult();
+            foreach (var item in issues)
+            {
+                Console.WriteLine(item.Repository.Name + " - " + item.Title);
+            }
+
+            var relevantIssuesRequest = new SearchIssuesRequest("Aufwand:")
+            {
+                Involves = "suchja",
+                Type = IssueTypeQualifier.Issue,
+                State = ItemState.Open,
+                In = new[] { IssueInQualifier.Comment },
+            };
+
+            SearchIssuesResult openRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
+
+            Console.WriteLine("Open Issues: ");
+            foreach (Issue item in openRelevantIssues.Items)
+            {
+                Console.WriteLine(item.Id + " - " + item.Title);
+            }
+
+            relevantIssuesRequest.State = ItemState.Closed;
+            SearchIssuesResult closedRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
+
+            Console.WriteLine("Closed Issues: ");
+            foreach (Issue item in closedRelevantIssues.Items)
+            {
+                Console.WriteLine(item.Id + " - " + item.Title);
+            }
 
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
