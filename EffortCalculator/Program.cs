@@ -14,12 +14,7 @@ namespace EffortCalculator
             EffortSheet sheet = new EffortSheet("Aufwandsübersicht Juni 2017");
 
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
-            string accessToken = RequestAccessTokenFromUser();
-
-            var client = new GitHubClient(new ProductHeaderValue("Issue-Test-Client"));
-            var authToken = new Credentials(accessToken);
-
-            client.Credentials = authToken;
+            GitHubClient client = InitializeClient();
 
             var relevantIssuesRequest = new SearchIssuesRequest("Aufwand: ")
             {
@@ -59,6 +54,17 @@ namespace EffortCalculator
 
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
+        }
+
+        private static GitHubClient InitializeClient()
+        {
+            string accessToken = RequestAccessTokenFromUser();
+
+            var client = new GitHubClient(new ProductHeaderValue("Issue-Test-Client"));
+            var authToken = new Credentials(accessToken);
+
+            client.Credentials = authToken;
+            return client;
         }
 
         private static IReadOnlyCollection<IssueComment> GetPotentialComments(IIssueCommentsClient client, Issue issue)
