@@ -48,6 +48,7 @@
     <Compile Include="EffortComment.cs" />
     <Compile Include="EffortIssue.cs" />
     <Compile Include="EffortSheet.cs" />
+    <Compile Include="EffortSheetFactory.cs" />
     <Compile Include="GitHubIssueRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

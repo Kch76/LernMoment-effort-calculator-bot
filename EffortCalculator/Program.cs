@@ -13,28 +13,11 @@ namespace EffortCalculator
         {
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
 
-            EffortSheet sheet = new EffortSheet("Aufwandsübersicht Juni 2017");
             GitHubClient client = InitializeClient();
             GitHubIssueRepository issueRepository = new GitHubIssueRepository(client.Search, client.Issue);
+            EffortSheetFactory sheetFactory = new EffortSheetFactory(issueRepository);
 
-            foreach (var issue in issueRepository.GetAllEffortRelatedIssues("Aufwand: ", "suchja"))
-            {
-                IReadOnlyCollection<IssueComment> comments = issueRepository.GetAllEffortRelatedComments("Aufwand: ", issue);
-
-                EffortIssue eIssue = new EffortIssue(issue);
-                foreach (var item in comments)
-                {
-                    EffortComment eComment = new EffortComment(item);
-                    eIssue.AddEffortComment(eComment);
-                }
-
-                if (eIssue.EffortInHours > 0.0f)
-                {
-                    sheet.AddEffortEntry(eIssue);
-                }
-                // Anzeige, dass dem Anwender klar ist, dass noch etwas passiert.
-                Console.Write(".");
-            }
+            EffortSheet sheet = sheetFactory.CreateNew("Aufwandsübersicht Juni 2017");
 
             Console.WriteLine();
             Console.WriteLine(sheet);
@@ -53,15 +36,6 @@ namespace EffortCalculator
 
             client.Credentials = authToken;
             return client;
-        }
-
-        private static IReadOnlyCollection<IssueComment> GetPotentialComments(IIssueCommentsClient client, Issue issue)
-        {
-            string[] repoUrlSegments = issue.Url.Segments;
-            string ownerName = repoUrlSegments[2].TrimEnd('/');
-            string repoName = repoUrlSegments[3].TrimEnd('/');
-
-            return client.GetAllForIssue(ownerName, repoName, issue.Number).GetAwaiter().GetResult();
         }
 
         private static string RequestAccessTokenFromUser()
