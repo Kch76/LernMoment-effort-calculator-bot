@@ -36,7 +36,12 @@ namespace EffortCalculator
 
         public override string ToString()
         {
-            return CreatedAt + " - " + EffortInHours + "h";
+            string result;
+
+            result = "[" + CreatedAt + "](" + ghComment.HtmlUrl.AbsoluteUri + ")";
+            result += ", Aufwand: " + EffortInHours + "h";
+
+            return  result;
         }
 
         private float ExtractEffort(string text)
