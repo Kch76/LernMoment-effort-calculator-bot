@@ -14,6 +14,14 @@ namespace EffortCalculator
         public EffortComment(IssueComment githubComment)
         {
             ghComment = githubComment;
+            EffortInHours = ExtractEffort(ghComment.Body);
+        }
+
+        private float effort;
+        public float EffortInHours
+        {
+            get { return effort; }
+            private set { effort = value; }
         }
 
         public DateTime CreatedAt
@@ -28,7 +36,19 @@ namespace EffortCalculator
 
         public override string ToString()
         {
-            return CreatedAt + " - " + Body;
+            return CreatedAt + " - " + EffortInHours + "h";
+        }
+
+        private float ExtractEffort(string text)
+        {
+            // entfernt "Aufwand: " aus dem Text. Damit sollte die Aufwandszahl direkt am ANfang
+            // der Zeichenkette stehen.
+            string effortAtStart = text.Remove(0, 9);
+            int effortEndPosition = effortAtStart.IndexOf('h');
+
+            string effortAsString = effortAtStart.Substring(0, effortEndPosition);
+
+            return float.Parse(effortAsString);
         }
     }
 }
