@@ -9,10 +9,10 @@ namespace EffortCalculator
 {
     class Program
     {
-        static List<EffortIssue> effortIssues = new List<EffortIssue>();
-
         static void Main(string[] args)
         {
+            EffortSheet sheet = new EffortSheet("Aufwandsübersicht Juni 2017");
+
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
             string accessToken = RequestAccessTokenFromUser();
 
@@ -44,7 +44,7 @@ namespace EffortCalculator
 
                         if (!isIssueAdded)
                         {
-                            effortIssues.Add(eIssue);
+                            sheet.AddEffortEntry(eIssue);
                             isIssueAdded = true;
                         }
 
@@ -56,14 +56,7 @@ namespace EffortCalculator
             }
 
             Console.WriteLine();
-            Console.WriteLine("Hier die gewünschte Aufstellung: ");
-            float overallEffortInHours = 0f;
-            foreach (var item in effortIssues)
-            {
-                overallEffortInHours += item.EffortInHours;
-                Console.WriteLine(item);
-            }
-            Console.WriteLine($"Der noch abzurechnende Aufwand beträgt: {overallEffortInHours}h");
+            Console.WriteLine(sheet);
             Console.WriteLine();
 
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
