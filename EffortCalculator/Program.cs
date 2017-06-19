@@ -34,7 +34,6 @@ namespace EffortCalculator
             {
                 IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
 
-                bool isIssueAdded = false;
                 EffortIssue eIssue = new EffortIssue(issue);
                 foreach (var item in comments)
                 {
@@ -42,14 +41,13 @@ namespace EffortCalculator
                     {
                         EffortComment eComment = new EffortComment(item);
 
-                        if (!isIssueAdded)
-                        {
-                            sheet.AddEffortEntry(eIssue);
-                            isIssueAdded = true;
-                        }
-
                         eIssue.AddEffortComment(eComment);
                     }
+                }
+
+                if (eIssue.EffortInHours > 0.0f)
+                {
+                    sheet.AddEffortEntry(eIssue);
                 }
                 // Anzeige, dass dem Anwender klar ist, dass noch etwas passiert.
                 Console.Write(".");
