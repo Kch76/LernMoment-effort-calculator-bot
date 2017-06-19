@@ -10,7 +10,7 @@ namespace EffortCalculator
     class Program
     {
         static List<EffortIssue> effortIssues = new List<EffortIssue>();
-        static List<IssueComment> potentialComments = new List<IssueComment>();
+        static List<EffortComment> effortComments = new List<EffortComment>();
 
         static void Main(string[] args)
         {
@@ -41,9 +41,11 @@ namespace EffortCalculator
                     if (item.Body.StartsWith("Aufwand: ") && item.Reactions.Hooray == 0)
                     {
                         EffortIssue eIssue = new EffortIssue(issue);
+                        EffortComment eComment = new EffortComment(item);
+
                         Console.WriteLine();
                         Console.WriteLine(eIssue);
-                        Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
+                        Console.WriteLine(eComment);
                         Console.Write("Ist dies ein gültiger Kommentar für die Aufwandsabschätzung (j/n)? ");
                         ConsoleKeyInfo selection = Console.ReadKey();
                         Console.WriteLine();
@@ -56,16 +58,16 @@ namespace EffortCalculator
                                 isIssueAdded = true;
                             }
 
-                            potentialComments.Add(item);
+                            effortComments.Add(eComment);
                         }
                     }
                 }
             }
 
             Console.WriteLine("Hier nochmals die ausgewählten Kommentare: ");
-            foreach (var item in potentialComments)
+            foreach (var item in effortComments)
             {
-                Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
+                Console.WriteLine(item);
             }
 
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
