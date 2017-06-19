@@ -70,14 +70,6 @@ namespace EffortCalculator
             Console.ReadLine();
         }
 
-        private static void OutputIssue(Issue issue)
-        {
-            string[] repoUrlSegments = issue.Url.Segments;
-            string repoName = repoUrlSegments[3].TrimEnd('/');
-
-            Console.WriteLine(repoName + " - #" + issue.Number + " - " + issue.State + " - " + issue.Title);
-        }
-
         private static IReadOnlyCollection<IssueComment> GetPotentialComments(IIssueCommentsClient client, Issue issue)
         {
             string[] repoUrlSegments = issue.Url.Segments;
