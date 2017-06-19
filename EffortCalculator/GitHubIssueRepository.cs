@@ -31,5 +31,26 @@ namespace EffortCalculator
 
             return potentialEffortIssues.Items;
         }
+
+        public IReadOnlyList<IssueComment> GetAllEffortRelatedComments(string searchTerm, Issue owningIssue)
+        {
+            // extract owner and repository name
+            string[] repoUrlSegments = owningIssue.Url.Segments;
+            string ownerName = repoUrlSegments[2].TrimEnd('/');
+            string repoName = repoUrlSegments[3].TrimEnd('/');
+
+            IReadOnlyList<IssueComment> allComments = issuesClient.Comment.GetAllForIssue(ownerName, repoName, owningIssue.Number).GetAwaiter().GetResult();
+            List<IssueComment> effortRelatedComments = new List<IssueComment>();
+
+            foreach (var item in allComments)
+            {
+                if (item.Body.StartsWith(searchTerm) && item.Reactions.Hooray == 0)
+                {
+                    effortRelatedComments.Add(item);
+                }
+            }
+
+            return effortRelatedComments.AsReadOnly();
+        }
     }
 }

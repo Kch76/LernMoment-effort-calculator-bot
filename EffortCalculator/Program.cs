@@ -19,17 +19,13 @@ namespace EffortCalculator
 
             foreach (var issue in issueRepository.GetAllEffortRelatedIssues("Aufwand: ", "suchja"))
             {
-                IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
+                IReadOnlyCollection<IssueComment> comments = issueRepository.GetAllEffortRelatedComments("Aufwand: ", issue);
 
                 EffortIssue eIssue = new EffortIssue(issue);
                 foreach (var item in comments)
                 {
-                    if (item.Body.StartsWith("Aufwand: ") && item.Reactions.Hooray == 0)
-                    {
-                        EffortComment eComment = new EffortComment(item);
-
-                        eIssue.AddEffortComment(eComment);
-                    }
+                    EffortComment eComment = new EffortComment(item);
+                    eIssue.AddEffortComment(eComment);
                 }
 
                 if (eIssue.EffortInHours > 0.0f)
