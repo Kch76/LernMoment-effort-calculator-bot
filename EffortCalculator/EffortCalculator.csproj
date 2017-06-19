@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\EffortComment.cs" />
+    <Compile Include="Model\EffortDetailsEntry.cs" />
     <Compile Include="Model\EffortEntry.cs" />
     <Compile Include="Model\EffortSheet.cs" />
     <Compile Include="Model\EffortSheetFactory.cs" />

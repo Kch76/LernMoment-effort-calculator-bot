@@ -35,7 +35,7 @@ namespace EffortCalculator.Model
                 EffortEntry eIssue = new EffortEntry(issue);
                 foreach (var item in comments)
                 {
-                    EffortComment eComment = new EffortComment(item);
+                    EffortDetailsEntry eComment = new EffortDetailsEntry(item);
                     eIssue.AddEffortComment(eComment);
                 }
 

@@ -7,11 +7,11 @@ using Octokit;
 
 namespace EffortCalculator.Model
 {
-    class EffortComment
+    class EffortDetailsEntry
     {
         private IssueComment ghComment;
 
-        public EffortComment(IssueComment githubComment)
+        public EffortDetailsEntry(IssueComment githubComment)
         {
             ghComment = githubComment;
             EffortInHours = ExtractEffort(ghComment.Body);

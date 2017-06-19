@@ -10,14 +10,14 @@ namespace EffortCalculator.Model
     class EffortEntry
     {
         private Issue ghIssue;
-        private List<EffortComment> comments = new List<EffortComment>();
+        private List<EffortDetailsEntry> comments = new List<EffortDetailsEntry>();
 
         public EffortEntry(Issue githubIssue)
         {
             ghIssue = githubIssue;
         }
 
-        public void AddEffortComment(EffortComment comment)
+        public void AddEffortComment(EffortDetailsEntry comment)
         {
             // TODO: Überlegen wie ich mit Kommentaren umgehe die bereits in der Liste sind.
             comments.Add(comment);
