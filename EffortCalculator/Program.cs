@@ -9,7 +9,7 @@ namespace EffortCalculator
 {
     class Program
     {
-        static List<Issue> potentialIssues = new List<Issue>();
+        static List<EffortIssue> effortIssues = new List<EffortIssue>();
         static List<IssueComment> potentialComments = new List<IssueComment>();
 
         static void Main(string[] args)
@@ -29,18 +29,20 @@ namespace EffortCalculator
                 In = new[] { IssueInQualifier.Comment },
             };
 
-            SearchIssuesResult openRelevantIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
-            potentialIssues.AddRange(openRelevantIssues.Items);
+            SearchIssuesResult potentialEffortIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
 
-            foreach (var issue in potentialIssues)
+            foreach (var issue in potentialEffortIssues.Items)
             {
-                OutputIssue(issue);
                 IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
 
+                bool isIssueAdded = false;
                 foreach (var item in comments)
                 {
                     if (item.Body.StartsWith("Aufwand: ") && item.Reactions.Hooray == 0)
                     {
+                        EffortIssue eIssue = new EffortIssue(issue);
+                        Console.WriteLine();
+                        Console.WriteLine(eIssue);
                         Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
                         Console.Write("Ist dies ein gültiger Kommentar für die Aufwandsabschätzung (j/n)? ");
                         ConsoleKeyInfo selection = Console.ReadKey();
@@ -48,6 +50,12 @@ namespace EffortCalculator
 
                         if (selection.Key == ConsoleKey.J)
                         {
+                            if (!isIssueAdded)
+                            {
+                                effortIssues.Add(eIssue);
+                                isIssueAdded = true;
+                            }
+
                             potentialComments.Add(item);
                         }
                     }
