@@ -39,11 +39,13 @@ namespace EffortCalculator
 
                 foreach (var item in comments)
                 {
-                    if (item.Body.Contains("Aufwand: "))
+                    if (item.Body.Contains("Aufwand: ") && item.Reactions.Hooray == 0)
                     {
                         Console.WriteLine(item.Id + " - " + item.Body + " - " + item.Reactions.TotalCount);
                         Console.Write("Ist dies ein gültiger Kommentar für die Aufwandsabschätzung (j/n)? ");
                         ConsoleKeyInfo selection = Console.ReadKey();
+                        Console.WriteLine();
+
                         if (selection.Key == ConsoleKey.J)
                         {
                             potentialComments.Add(item);
