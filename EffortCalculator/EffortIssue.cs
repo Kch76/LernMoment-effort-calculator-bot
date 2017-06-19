@@ -23,6 +23,19 @@ namespace EffortCalculator
             comments.Add(comment);
         }
 
+        public float EffortInHours
+        {
+            get
+            {
+                float result = 0f;
+                foreach (var comment in comments)
+                {
+                    result += comment.EffortInHours;
+                }
+                return result;
+            }
+        }
+
         public override string ToString()
         {
             string result;
@@ -33,6 +46,7 @@ namespace EffortCalculator
             result = ghIssue.Title;
             result += " (" + repoName + ")";
             result += ", " + ghIssue.Number;
+            result += ", " + EffortInHours + "h";
 
             // Comment information
             foreach (var comment in comments)

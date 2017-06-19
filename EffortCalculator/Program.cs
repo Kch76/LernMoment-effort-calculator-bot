@@ -63,11 +63,16 @@ namespace EffortCalculator
                 }
             }
 
+            Console.WriteLine();
             Console.WriteLine("Hier nochmals die ausgewählten Kommentare: ");
+            float overallEffortInHours = 0f;
             foreach (var item in effortIssues)
             {
+                overallEffortInHours += item.EffortInHours;
                 Console.WriteLine(item);
             }
+            Console.WriteLine($"Der noch abzurechnende Aufwand beträgt: {overallEffortInHours}h");
+            Console.WriteLine();
 
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
