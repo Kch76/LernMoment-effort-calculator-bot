@@ -45,11 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EffortComment.cs" />
-    <Compile Include="EffortIssue.cs" />
-    <Compile Include="EffortSheet.cs" />
-    <Compile Include="EffortSheetFactory.cs" />
-    <Compile Include="GitHubIssueRepository.cs" />
+    <Compile Include="Model\EffortComment.cs" />
+    <Compile Include="Model\EffortIssue.cs" />
+    <Compile Include="Model\EffortSheet.cs" />
+    <Compile Include="Model\EffortSheetFactory.cs" />
+    <Compile Include="Model\GitHubIssueRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
