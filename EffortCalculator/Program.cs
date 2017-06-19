@@ -11,21 +11,13 @@ namespace EffortCalculator
     {
         static void Main(string[] args)
         {
-            EffortSheet sheet = new EffortSheet("Aufwandsübersicht Juni 2017");
-
             Console.WriteLine(" # # #   Effort Calculator   # # # ");
+
+            EffortSheet sheet = new EffortSheet("Aufwandsübersicht Juni 2017");
             GitHubClient client = InitializeClient();
+            GitHubIssueRepository issueRepository = new GitHubIssueRepository(client.Search, client.Issue);
 
-            var relevantIssuesRequest = new SearchIssuesRequest("Aufwand: ")
-            {
-                Involves = "suchja",
-                Type = IssueTypeQualifier.Issue,
-                In = new[] { IssueInQualifier.Comment },
-            };
-
-            SearchIssuesResult potentialEffortIssues = client.Search.SearchIssues(relevantIssuesRequest).GetAwaiter().GetResult();
-
-            foreach (var issue in potentialEffortIssues.Items)
+            foreach (var issue in issueRepository.GetAllEffortRelatedIssues("Aufwand: ", "suchja"))
             {
                 IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
 
