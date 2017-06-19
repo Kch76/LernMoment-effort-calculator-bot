@@ -8,7 +8,7 @@ namespace EffortCalculator.Model
 {
     class EffortSheet
     {
-        private List<EffortIssue> effortEntries = new List<EffortIssue>();
+        private List<EffortEntry> effortEntries = new List<EffortEntry>();
 
         public EffortSheet(string name)
         {
@@ -34,7 +34,7 @@ namespace EffortCalculator.Model
         /// Fügt der Übersicht einen weitern Aufwandseintrag hinzu
         /// </summary>
         /// <param name="entry"></param>
-        public void AddEffortEntry(EffortIssue entry)
+        public void AddEffortEntry(EffortEntry entry)
         {
             effortEntries.Add(entry);
         }

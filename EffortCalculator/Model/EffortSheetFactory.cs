@@ -32,7 +32,7 @@ namespace EffortCalculator.Model
             {
                 IReadOnlyCollection<IssueComment> comments = issueRepository.GetAllEffortRelatedComments("Aufwand: ", issue);
 
-                EffortIssue eIssue = new EffortIssue(issue);
+                EffortEntry eIssue = new EffortEntry(issue);
                 foreach (var item in comments)
                 {
                     EffortComment eComment = new EffortComment(item);

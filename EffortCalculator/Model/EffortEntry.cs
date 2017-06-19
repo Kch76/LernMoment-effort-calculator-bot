@@ -7,12 +7,12 @@ using Octokit;
 
 namespace EffortCalculator.Model
 {
-    class EffortIssue
+    class EffortEntry
     {
         private Issue ghIssue;
         private List<EffortComment> comments = new List<EffortComment>();
 
-        public EffortIssue(Issue githubIssue)
+        public EffortEntry(Issue githubIssue)
         {
             ghIssue = githubIssue;
         }
