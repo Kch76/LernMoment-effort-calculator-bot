@@ -10,7 +10,6 @@ namespace EffortCalculator
     class Program
     {
         static List<EffortIssue> effortIssues = new List<EffortIssue>();
-        static List<EffortComment> effortComments = new List<EffortComment>();
 
         static void Main(string[] args)
         {
@@ -36,11 +35,11 @@ namespace EffortCalculator
                 IReadOnlyCollection<IssueComment> comments = GetPotentialComments(client.Issue.Comment, issue);
 
                 bool isIssueAdded = false;
+                EffortIssue eIssue = new EffortIssue(issue);
                 foreach (var item in comments)
                 {
                     if (item.Body.StartsWith("Aufwand: ") && item.Reactions.Hooray == 0)
                     {
-                        EffortIssue eIssue = new EffortIssue(issue);
                         EffortComment eComment = new EffortComment(item);
 
                         Console.WriteLine();
@@ -58,14 +57,14 @@ namespace EffortCalculator
                                 isIssueAdded = true;
                             }
 
-                            effortComments.Add(eComment);
+                            eIssue.AddEffortComment(eComment);
                         }
                     }
                 }
             }
 
             Console.WriteLine("Hier nochmals die ausgewählten Kommentare: ");
-            foreach (var item in effortComments)
+            foreach (var item in effortIssues)
             {
                 Console.WriteLine(item);
             }
