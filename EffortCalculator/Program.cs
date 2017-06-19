@@ -42,29 +42,21 @@ namespace EffortCalculator
                     {
                         EffortComment eComment = new EffortComment(item);
 
-                        Console.WriteLine();
-                        Console.WriteLine(eIssue);
-                        Console.WriteLine(eComment);
-                        Console.Write("Ist dies ein gültiger Kommentar für die Aufwandsabschätzung (j/n)? ");
-                        ConsoleKeyInfo selection = Console.ReadKey();
-                        Console.WriteLine();
-
-                        if (selection.Key == ConsoleKey.J)
+                        if (!isIssueAdded)
                         {
-                            if (!isIssueAdded)
-                            {
-                                effortIssues.Add(eIssue);
-                                isIssueAdded = true;
-                            }
-
-                            eIssue.AddEffortComment(eComment);
+                            effortIssues.Add(eIssue);
+                            isIssueAdded = true;
                         }
+
+                        eIssue.AddEffortComment(eComment);
                     }
                 }
+                // Anzeige, dass dem Anwender klar ist, dass noch etwas passiert.
+                Console.Write(".");
             }
 
             Console.WriteLine();
-            Console.WriteLine("Hier nochmals die ausgewählten Kommentare: ");
+            Console.WriteLine("Hier die gewünschte Aufstellung: ");
             float overallEffortInHours = 0f;
             foreach (var item in effortIssues)
             {
