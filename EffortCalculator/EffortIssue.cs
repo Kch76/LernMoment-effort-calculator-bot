@@ -45,7 +45,7 @@ namespace EffortCalculator
             // Issue information
             result = ghIssue.Title;
             result += " (" + repoName + ")";
-            result += ", " + ghIssue.Number;
+            result += ", [Issue: " + ghIssue.Number + "](" + ghIssue.HtmlUrl.AbsoluteUri + ")";
             result += ", " + EffortInHours + "h";
 
             // Comment information
