@@ -47,6 +47,45 @@ namespace EffortCalculator.Model
                 Console.Write(".");
             }
 
+            foreach (var issue in issueRepository.GetAllEffortRelatedIssues("Iteration: ", "suchja"))
+            {
+                IReadOnlyCollection<IssueComment> comments = issueRepository.GetAllEffortRelatedComments("Iteration: ", issue);
+
+                foreach (var item in comments)
+                {
+                    if (item.Body.StartsWith("Iteration: ") && item.Reactions.Hooray == 0)
+                    {
+                        // extract owner and repository name
+                        string[] repoUrlSegments = issue.Url.Segments;
+                        string repoName = repoUrlSegments[3].TrimEnd('/');
+
+                        // Namen extrahieren
+                        string itName;
+                        int itNameEndPosition = item.Body.IndexOf(Environment.NewLine);
+                        itName = item.Body.Remove(itNameEndPosition, item.Body.Length - itNameEndPosition);
+                        itName += " (" + repoName + ")";
+
+                        var it = sheet.GetIteration(itName);
+                        if (it == null)
+                        {
+                            it = new Iteration(itName);
+                            it.AddIterationEntry(new IterationEntry(issue));
+                            sheet.AddIteration(it);
+                        }
+                        else
+                        {
+                            it.AddIterationEntry(new IterationEntry(issue));
+                        }
+
+                        // wir brauchen nur einen Kommentar um zu bestätigen, dass dieses Issue
+                        // tatsächlich zu einer Iteration gehört.
+                        break;
+                    }
+                }
+
+                // Anzeige, dass dem Anwender klar ist, dass noch etwas passiert.
+                Console.Write(".");
+            }
             return sheet;
         }
     }
