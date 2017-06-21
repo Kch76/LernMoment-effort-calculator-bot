@@ -68,7 +68,7 @@ namespace EffortCalculator.Model
                         var it = sheet.GetIteration(itName);
                         if (it == null)
                         {
-                            it = new Iteration(itName);
+                            it = new Iteration(itName, repoName);
                             it.AddIterationEntry(new IterationEntry(issue));
                             sheet.AddIteration(it);
                         }

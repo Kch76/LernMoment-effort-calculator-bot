@@ -10,12 +10,20 @@ namespace EffortCalculator.Model
     {
         private List<IterationEntry> entries = new List<IterationEntry>();
 
-        public Iteration(string name)
+        public Iteration(string name, string projectName)
         {
             Name = name;
         }
 
+        /// <summary>
+        /// Der Name dieser Iteration
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Der Name des Projektes für die diese Iteration ausgeführt wird
+        /// </summary>
+        public string ProjectName { get; private set; }
 
         public void AddIterationEntry(IterationEntry entry)
         {
