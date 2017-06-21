@@ -54,10 +54,10 @@ namespace EffortCalculator
             string token = Properties.Settings.Default.AccessToken;
 
             Console.WriteLine("*** Personal Access Token Eingabe ***");
-            Console.Write("Soll der gespeichert Token: {0} verwendet werden? (ja/nein): ", HidePartsOfToken(token));
-            string retrieveNewKey = Console.ReadLine();
+            Console.Write("Soll der gespeichert Token: {0} verwendet werden? (j/n): ", HidePartsOfToken(token));
+            ConsoleKeyInfo retrieveNewKey = Console.ReadKey();
 
-            if (retrieveNewKey.ToLower().Equals("nein"))
+            if (retrieveNewKey.Key == ConsoleKey.N)
             {
                 Console.Write("Bitte gib einen neuen Token ein: ");
                 token = Console.ReadLine();
