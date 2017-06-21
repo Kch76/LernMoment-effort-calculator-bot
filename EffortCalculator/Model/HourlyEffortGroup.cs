@@ -23,6 +23,26 @@ namespace EffortCalculator.Model
             comments.Add(comment);
         }
 
+        public string Name
+        {
+            get
+            {
+                string name;
+                string[] repoUrlSegments = ghIssue.Url.Segments;
+                string repoName = repoUrlSegments[3].TrimEnd('/');
+
+                name = ghIssue.Title;
+                name += " (" + repoName + ")";
+
+                return name;
+            }
+        }
+
+        public Uri LinkToDetailedDescription
+        {
+            get { return ghIssue.HtmlUrl; }
+        }
+
         public float EffortInHours
         {
             get

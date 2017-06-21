@@ -41,6 +41,14 @@ namespace EffortCalculator.Model
         }
 
         /// <summary>
+        /// Ermöglicht lesenden Zugriff auf die einzelnen Aufwände in dieser Übersicht.
+        /// </summary>
+        public IReadOnlyList<HourlyEffortGroup> GetAllEffortGroups()
+        {
+            return effortEntries.AsReadOnly();
+        }
+
+        /// <summary>
         /// Fügt der Übersicht einen weitern Aufwandseintrag hinzu
         /// </summary>
         /// <param name="entry"></param>
@@ -49,9 +57,21 @@ namespace EffortCalculator.Model
             iterations.Add(it);
         }
 
+        /// <summary>
+        /// Gibt eine Iteration anhand ihres Namens zurück
+        /// </summary>
         public Iteration GetIteration(string name)
         {
             return iterations.FirstOrDefault(x => { return x.Name == name; });
+        }
+
+        /// <summary>
+        /// Ermöglicht lesenden Zugriff auf die Iterationen dieser Übersicht
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<Iteration> GetAllIterations()
+        {
+            return iterations.AsReadOnly();
         }
 
         /// <summary>

@@ -31,6 +31,11 @@ namespace EffortCalculator.Model
             entries.Add(entry);
         }
 
+        public IReadOnlyList<IterationEntry> GetAllEntries()
+        {
+            return entries.AsReadOnly();
+        }
+
         public override string ToString()
         {
             string result = Name + " (" + ProjectName + ")";

@@ -21,6 +21,11 @@ namespace EffortCalculator.Model
             get { return ghIssue.Title; }
         }
 
+        public Uri LinkToDetailedDescription
+        {
+            get { return ghIssue.HtmlUrl; }
+        }
+
         public override string ToString()
         {
             return Title;
