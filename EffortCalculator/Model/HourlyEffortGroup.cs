@@ -7,17 +7,17 @@ using Octokit;
 
 namespace EffortCalculator.Model
 {
-    class EffortEntry
+    class HourlyEffortGroup
     {
         private Issue ghIssue;
-        private List<EffortDetailsEntry> comments = new List<EffortDetailsEntry>();
+        private List<HourlyEffortEntry> comments = new List<HourlyEffortEntry>();
 
-        public EffortEntry(Issue githubIssue)
+        public HourlyEffortGroup(Issue githubIssue)
         {
             ghIssue = githubIssue;
         }
 
-        public void AddEffortComment(EffortDetailsEntry comment)
+        public void AddEffortComment(HourlyEffortEntry comment)
         {
             // TODO: Überlegen wie ich mit Kommentaren umgehe die bereits in der Liste sind.
             comments.Add(comment);

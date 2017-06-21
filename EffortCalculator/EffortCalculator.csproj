@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\EffortDetailsEntry.cs" />
-    <Compile Include="Model\EffortEntry.cs" />
+    <Compile Include="Model\HourlyEffortEntry.cs" />
+    <Compile Include="Model\HourlyEffortGroup.cs" />
     <Compile Include="Model\EffortSheet.cs" />
     <Compile Include="Model\EffortSheetFactory.cs" />
     <Compile Include="Model\GitHubIssueRepository.cs" />

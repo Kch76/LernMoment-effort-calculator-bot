@@ -32,10 +32,10 @@ namespace EffortCalculator.Model
             {
                 IReadOnlyCollection<IssueComment> comments = issueRepository.GetAllEffortRelatedComments("Aufwand: ", issue);
 
-                EffortEntry eIssue = new EffortEntry(issue);
+                HourlyEffortGroup eIssue = new HourlyEffortGroup(issue);
                 foreach (var item in comments)
                 {
-                    EffortDetailsEntry eComment = new EffortDetailsEntry(item);
+                    HourlyEffortEntry eComment = new HourlyEffortEntry(item);
                     eIssue.AddEffortComment(eComment);
                 }
 

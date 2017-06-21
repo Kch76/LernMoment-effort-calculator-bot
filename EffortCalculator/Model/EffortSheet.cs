@@ -8,7 +8,7 @@ namespace EffortCalculator.Model
 {
     class EffortSheet
     {
-        private List<EffortEntry> effortEntries = new List<EffortEntry>();
+        private List<HourlyEffortGroup> effortEntries = new List<HourlyEffortGroup>();
         private List<Iteration> iterations = new List<Iteration>();
 
         public EffortSheet(string name)
@@ -35,7 +35,7 @@ namespace EffortCalculator.Model
         /// Fügt der Übersicht einen weitern Aufwandseintrag hinzu
         /// </summary>
         /// <param name="entry"></param>
-        public void AddEffortEntry(EffortEntry entry)
+        public void AddEffortEntry(HourlyEffortGroup entry)
         {
             effortEntries.Add(entry);
         }
