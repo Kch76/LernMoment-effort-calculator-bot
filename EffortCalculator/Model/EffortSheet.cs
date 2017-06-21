@@ -58,7 +58,7 @@ namespace EffortCalculator.Model
         /// Berechnet den kompletten Aufwand für alle Einträge auf stündlicher Basis in dieser Übersicht.
         /// </summary>
         /// <returns></returns>
-        private float SumHourlyEffort()
+        public float SumHourlyEffort()
         {
             float effort = 0f;
             foreach (var entry in effortEntries)
@@ -73,7 +73,7 @@ namespace EffortCalculator.Model
         /// Summiert alle Iterationen in dieser Übersicht.
         /// </summary>
         /// <returns></returns>
-        private int SumIterations()
+        public int SumIterations()
         {
             return iterations.Count;
         }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\CustomerInformationService.cs" />
     <Compile Include="Model\HourlyEffortEntry.cs" />
     <Compile Include="Model\HourlyEffortGroup.cs" />
     <Compile Include="Model\EffortSheet.cs" />

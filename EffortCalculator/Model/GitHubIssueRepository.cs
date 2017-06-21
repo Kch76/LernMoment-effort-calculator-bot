@@ -52,5 +52,10 @@ namespace EffortCalculator.Model
 
             return effortRelatedComments.AsReadOnly();
         }
+
+        public void AddIssue(NewIssue issue, string repositorName, string ownerName)
+        {
+            issuesClient.Create(ownerName, repositorName, issue).GetAwaiter().GetResult();
+        }
     }
 }

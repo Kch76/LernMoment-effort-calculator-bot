@@ -24,6 +24,16 @@ namespace EffortCalculator
             Console.WriteLine(sheet);
             Console.WriteLine();
 
+            Console.Write("Soll der Kunde informiert werden (j/n)? ");
+            ConsoleKeyInfo informUserKey = Console.ReadKey();
+            if (informUserKey.Key == ConsoleKey.J)
+            {
+                var cis = new CustomerInformationService();
+                NewIssue issue = cis.CreateEffortOverviewForCustomer(sheet);
+                issueRepository.AddIssue(issue, "aufwand-test", "suchja");
+            }
+
+            Console.WriteLine();
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
         }
