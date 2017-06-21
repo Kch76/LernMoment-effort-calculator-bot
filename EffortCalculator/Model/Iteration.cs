@@ -13,6 +13,7 @@ namespace EffortCalculator.Model
         public Iteration(string name, string projectName)
         {
             Name = name;
+            ProjectName = projectName;
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace EffortCalculator.Model
 
         public override string ToString()
         {
-            string result = Name;
+            string result = Name + " (" + ProjectName + ")";
 
             foreach (var item in entries)
             {

@@ -63,7 +63,6 @@ namespace EffortCalculator.Model
                         string itName;
                         int itNameEndPosition = item.Body.IndexOf(Environment.NewLine);
                         itName = item.Body.Remove(itNameEndPosition, item.Body.Length - itNameEndPosition);
-                        itName += " (" + repoName + ")";
 
                         var it = sheet.GetIteration(itName);
                         if (it == null)
