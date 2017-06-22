@@ -28,14 +28,62 @@ namespace EffortCalculator
             ConsoleKeyInfo informUserKey = Console.ReadKey();
             if (informUserKey.Key == ConsoleKey.J)
             {
+                string targetRepositoryName = GetTargetRepositoryName();
+                string customerName = GetCustomerName();
                 var cis = new CustomerInformationService();
                 NewIssue issue = cis.CreateEffortOverviewForCustomer(sheet);
-                issueRepository.AddIssue(issue, "aufwand-test", "suchja");
+                issueRepository.AddIssue(issue, targetRepositoryName, customerName);
             }
 
             Console.WriteLine();
             Console.WriteLine("Drücke 'Enter' um die Anwendung zu beenden!");
             Console.ReadLine();
+        }
+
+        private static string GetTargetRepositoryName()
+        {
+            string name = Properties.Settings.Default.DefaultTargetRepository;
+
+            Console.WriteLine();
+            Console.Write("Soll das gespeichert Repository: {0} verwendet werden? (j/n): ", name);
+            ConsoleKeyInfo retrieveNewTargetRepository = Console.ReadKey();
+
+            if (retrieveNewTargetRepository.Key == ConsoleKey.N)
+            {
+                Console.WriteLine();
+                Console.Write("Bitte gib den neuen Repository-Namen ein: ");
+
+                name = Console.ReadLine();
+
+                // neuen Wert in den Settings speichern
+                Properties.Settings.Default.DefaultTargetRepository = name;
+                Properties.Settings.Default.Save();
+            }
+
+            return name;
+        }
+
+        private static string GetCustomerName()
+        {
+            string name = Properties.Settings.Default.DefaultCustomerName;
+
+            Console.WriteLine();
+            Console.Write("Soll der gespeicherte Kundenname: {0} verwendet werden? (j/n): ", name);
+            ConsoleKeyInfo retrieveNewCustomer = Console.ReadKey();
+
+            if (retrieveNewCustomer.Key == ConsoleKey.N)
+            {
+                Console.WriteLine();
+                Console.Write("Bitte gib den neuen Kundennamen ein: ");
+
+                name = Console.ReadLine();
+
+                // neuen Wert in den Settings speichern
+                Properties.Settings.Default.DefaultCustomerName = name;
+                Properties.Settings.Default.Save();
+            }
+
+            return name;
         }
 
         private static GitHubClient InitializeClient()

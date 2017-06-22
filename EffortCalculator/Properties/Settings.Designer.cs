@@ -34,5 +34,29 @@ namespace EffortCalculator.Properties {
                 this["AccessToken"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultTargetRepository {
+            get {
+                return ((string)(this["DefaultTargetRepository"]));
+            }
+            set {
+                this["DefaultTargetRepository"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultCustomerName {
+            get {
+                return ((string)(this["DefaultCustomerName"]));
+            }
+            set {
+                this["DefaultCustomerName"] = value;
+            }
+        }
     }
 }
