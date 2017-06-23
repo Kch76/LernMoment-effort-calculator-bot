@@ -31,8 +31,18 @@ namespace EffortCalculator
                 string targetRepositoryName = GetTargetRepositoryName();
                 string customerName = GetCustomerName();
                 var cis = new CustomerInformationService();
-                NewIssue issue = cis.CreateEffortOverviewForCustomer(sheet);
-                issueRepository.AddIssue(issue, targetRepositoryName, customerName);
+                var existingOverview = issueRepository.GetIssueWithName(targetRepositoryName, customerName, sheet.Name);
+
+                if (existingOverview == null)
+                {
+                    NewIssue issue = cis.CreateEffortOverviewForCustomer(sheet);
+                    issueRepository.AddIssue(issue, targetRepositoryName, customerName);
+                }
+                else
+                {
+                    string newOverview = cis.GetEffortOverviewForUpdate(sheet);
+                    issueRepository.AddCommentToIssue(targetRepositoryName, customerName, existingOverview, newOverview);
+                }
             }
 
             Console.WriteLine();

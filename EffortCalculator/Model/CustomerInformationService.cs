@@ -21,6 +21,17 @@ namespace EffortCalculator.Model
             return result;
         }
 
+        public string GetEffortOverviewForUpdate(EffortSheet sheet)
+        {
+            string result = CreateSheetOverviewInMarkdown(sheet);
+
+            result += Environment.NewLine;
+            result += Environment.NewLine;
+            result += "Update vom: " + DateTime.Now;
+
+            return result;
+        }
+
         private static string CreateSheetOverviewInMarkdown(EffortSheet sheet)
         {
             string result = CreateSummary(sheet);

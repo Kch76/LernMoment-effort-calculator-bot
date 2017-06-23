@@ -53,9 +53,31 @@ namespace EffortCalculator.Model
             return effortRelatedComments.AsReadOnly();
         }
 
+        public Issue GetIssueWithName(string repositorName, string ownerName, string issueName)
+        {
+            IReadOnlyList<Issue> issues = issuesClient.GetAllForRepository(ownerName, repositorName).GetAwaiter().GetResult();
+
+            return issues.FirstOrDefault(i =>
+            {
+                if (i.Title.Equals(issueName))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            });
+        }
+
         public void AddIssue(NewIssue issue, string repositorName, string ownerName)
         {
             issuesClient.Create(ownerName, repositorName, issue).GetAwaiter().GetResult();
+        }
+
+        public void AddCommentToIssue(string repositorName, string ownerName, Issue parent, string comment)
+        {
+            issuesClient.Comment.Create(ownerName, repositorName, parent.Number, comment).GetAwaiter().GetResult();
         }
     }
 }
