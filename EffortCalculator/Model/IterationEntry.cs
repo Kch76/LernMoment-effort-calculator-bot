@@ -23,7 +23,7 @@ namespace EffortCalculator.Model
 
         public Uri LinkToDetailedDescription
         {
-            get { return ghIssue.HtmlUrl; }
+            get { return new Uri(ghIssue.HtmlUrl); }
         }
 
         public override string ToString()

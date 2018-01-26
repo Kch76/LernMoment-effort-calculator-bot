@@ -35,7 +35,7 @@ namespace EffortCalculator.Model
         public IReadOnlyList<IssueComment> GetAllEffortRelatedComments(string searchTerm, Issue owningIssue)
         {
             // extract owner and repository name
-            string[] repoUrlSegments = owningIssue.Url.Segments;
+            string[] repoUrlSegments = new Uri(owningIssue.Url).Segments;
             string ownerName = repoUrlSegments[2].TrimEnd('/');
             string repoName = repoUrlSegments[3].TrimEnd('/');
 

@@ -28,7 +28,7 @@ namespace EffortCalculator.Model
             get
             {
                 string name;
-                string[] repoUrlSegments = ghIssue.Url.Segments;
+                string[] repoUrlSegments = new Uri(ghIssue.Url).Segments;
                 string repoName = repoUrlSegments[3].TrimEnd('/');
 
                 name = ghIssue.Title;
@@ -40,7 +40,7 @@ namespace EffortCalculator.Model
 
         public Uri LinkToDetailedDescription
         {
-            get { return ghIssue.HtmlUrl; }
+            get { return new Uri(ghIssue.HtmlUrl); }
         }
 
         public float EffortInHours
@@ -59,13 +59,13 @@ namespace EffortCalculator.Model
         public override string ToString()
         {
             string result;
-            string[] repoUrlSegments = ghIssue.Url.Segments;
+            string[] repoUrlSegments = new Uri(ghIssue.Url).Segments;
             string repoName = repoUrlSegments[3].TrimEnd('/');
 
             // Issue information
             result = ghIssue.Title;
             result += " (" + repoName + ")";
-            result += ", [Issue: " + ghIssue.Number + "](" + ghIssue.HtmlUrl.AbsoluteUri + ")";
+            result += ", [Issue: " + ghIssue.Number + "](" + ghIssue.HtmlUrl + ")";
             result += ", " + EffortInHours + "h";
 
             // Comment information

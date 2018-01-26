@@ -38,7 +38,7 @@ namespace EffortCalculator.Model
         {
             string result;
 
-            result = "[" + CreatedAt + "](" + ghComment.HtmlUrl.AbsoluteUri + ")";
+            result = "[" + CreatedAt + "](" + ghComment.HtmlUrl + ")";
             result += ", Aufwand: " + EffortInHours + "h";
 
             return  result;

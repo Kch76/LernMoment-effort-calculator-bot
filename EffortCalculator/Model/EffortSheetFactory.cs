@@ -56,7 +56,7 @@ namespace EffortCalculator.Model
                     if (item.Body.StartsWith("Iteration: ") && item.Reactions.Hooray == 0)
                     {
                         // extract owner and repository name
-                        string[] repoUrlSegments = issue.Url.Segments;
+                        string[] repoUrlSegments = new Uri(issue.Url).Segments;
                         string repoName = repoUrlSegments[3].TrimEnd('/');
 
                         // Namen extrahieren
