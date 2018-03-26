@@ -27,17 +27,20 @@ namespace EffortCalculator.Model
         {
             get
             {
-                string name;
-                string[] repoUrlSegments = new Uri(ghIssue.Url).Segments;
-                string repoName = repoUrlSegments[3].TrimEnd('/');
-
-                name = ghIssue.Title;
-                name += " (" + repoName + ")";
-
-                return name;
+                return ghIssue.Title;
             }
         }
 
+        public string RepositoryName
+        {
+            get
+            {
+                string[] repoUrlSegments = new Uri(ghIssue.Url).Segments;
+                string repoName = repoUrlSegments[3].TrimEnd('/');
+
+                return repoName;
+            }
+        }
         public Uri LinkToDetailedDescription
         {
             get { return new Uri(ghIssue.HtmlUrl); }

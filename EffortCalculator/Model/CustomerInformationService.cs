@@ -72,20 +72,28 @@ namespace EffortCalculator.Model
         {
             string result = Environment.NewLine;
             result += Environment.NewLine;
-            result += "| Aktivität | Aufwand | Von | Bis |" + Environment.NewLine;
-            result += "| --- | ---: | --- | --- |";
+            result += "| Aktivität | Projekt | Von | Bis | Aufwand | " + Environment.NewLine;
+            result += "| --- | --- | --- | --- | ---: |";
 
             IReadOnlyList<HourlyEffortGroup> effortGroups = sheet.GetAllEffortGroups();
-            foreach (var group in effortGroups)
+            IEnumerable<HourlyEffortGroup> orderedEffortGroups = effortGroups
+                .OrderBy(x => x.RepositoryName)
+                .ThenBy(x => x.FirstDate)
+                .ToList();
+
+            foreach (var group in orderedEffortGroups)
             {
                 result += Environment.NewLine;
-                result += $"| [{group.Name}]({group.LinkToDetailedDescription.AbsolutePath}) | {group.EffortInHours}h |";
-                result += $" {group.FirstDate.ToShortDateString()} | {group.LastDate.ToShortDateString()} |";
+                result += $"| [{group.Name}]({group.LinkToDetailedDescription.AbsolutePath}) ";
+                result += $"| {group.RepositoryName} ";
+                result += $"| {group.FirstDate.ToShortDateString()} ";
+                result += $"| {group.LastDate.ToShortDateString()} ";
+                result += $"| {group.EffortInHours}h |";
             }
 
             result += Environment.NewLine;
             result += $"| Summe | {sheet.SumHourlyEffort()}h |";
-            result += $" {sheet.From} | {sheet.To} |";
+            result += $" {sheet.From.ToShortDateString()} | {sheet.To.ToShortDateString()} |";
 
             return result;
         }
