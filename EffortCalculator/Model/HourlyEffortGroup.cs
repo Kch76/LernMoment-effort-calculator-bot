@@ -56,6 +56,24 @@ namespace EffortCalculator.Model
             }
         }
 
+        public DateTime FirstDate
+        {
+            get
+            {
+                List<HourlyEffortEntry> commentsOrderedByDate = comments.OrderBy(x => x.CreatedAt).ToList();
+                return commentsOrderedByDate.First().CreatedAt;
+            }
+        }
+
+        public DateTime LastDate
+        {
+            get
+            {
+                List<HourlyEffortEntry> commentsOrderedByDate = comments.OrderBy(x => x.CreatedAt).ToList();
+                return commentsOrderedByDate.Last().CreatedAt;
+            }
+        }
+
         public override string ToString()
         {
             string result;

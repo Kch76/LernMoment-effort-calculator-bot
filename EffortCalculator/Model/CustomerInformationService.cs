@@ -72,14 +72,15 @@ namespace EffortCalculator.Model
         {
             string result = Environment.NewLine;
             result += Environment.NewLine;
-            result += "| Aktivität | Aufwand |" + Environment.NewLine;
-            result += "| --- | ---: |";
+            result += "| Aktivität | Aufwand | Von | Bis |" + Environment.NewLine;
+            result += "| --- | ---: | --- | --- |";
 
             IReadOnlyList<HourlyEffortGroup> effortGroups = sheet.GetAllEffortGroups();
             foreach (var group in effortGroups)
             {
                 result += Environment.NewLine;
-                result += "| [" + group.Name + "](" + group.LinkToDetailedDescription.AbsolutePath + ") | " + group.EffortInHours + "h |";
+                result += $"| [{group.Name}]({group.LinkToDetailedDescription.AbsolutePath}) | {group.EffortInHours}h |";
+                result += $" {group.FirstDate.ToShortDateString()} | {group.LastDate.ToShortDateString()} |";
             }
 
             result += Environment.NewLine;
