@@ -84,7 +84,8 @@ namespace EffortCalculator.Model
             }
 
             result += Environment.NewLine;
-            result += "| Summe | " + sheet.SumHourlyEffort() + "h |";
+            result += $"| Summe | {sheet.SumHourlyEffort()}h |";
+            result += $" {sheet.From} | {sheet.To} |";
 
             return result;
         }

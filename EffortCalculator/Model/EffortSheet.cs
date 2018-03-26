@@ -19,12 +19,26 @@ namespace EffortCalculator.Model
         /// <summary>
         /// Diese Übersicht enthält Aufwände ab (inklusive) diesem Datum.
         /// </summary>
-        public DateTime From { get; private set; }
+        public DateTime From
+        {
+            get
+            {
+                List<HourlyEffortGroup> orderedEntries = effortEntries.OrderBy(x => x.FirstDate).ToList();
+                return orderedEntries.First().FirstDate;
+            }
+        }
 
         /// <summary>
         /// Diese Übersicht enthält Aufwände bis (inklusive) diesem Datum.
         /// </summary>
-        public DateTime To { get; private set; }
+        public DateTime To
+        {
+            get
+            {
+                List<HourlyEffortGroup> orderedEntries = effortEntries.OrderBy(x => x.LastDate).ToList();
+                return orderedEntries.Last().LastDate;
+            }
+        }
 
         /// <summary>
         /// Der Name für diese Übersicht.
