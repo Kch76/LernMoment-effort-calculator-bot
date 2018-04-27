@@ -92,8 +92,8 @@ namespace EffortCalculator.Model
             }
 
             result += Environment.NewLine;
-            result += $"| Summe | {sheet.SumHourlyEffort()}h |";
-            result += $" {sheet.From.ToShortDateString()} | {sheet.To.ToShortDateString()} |";
+            result += $"| Summe | |";
+            result += $" {sheet.From.ToShortDateString()} | {sheet.To.ToShortDateString()} | {sheet.SumHourlyEffort()}h |";
 
             return result;
         }
