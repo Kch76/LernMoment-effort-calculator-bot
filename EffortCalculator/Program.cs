@@ -18,7 +18,7 @@ namespace EffortCalculator
             GitHubIssueRepository issueRepository = new GitHubIssueRepository(client.Search, client.Issue);
             EffortSheetFactory sheetFactory = new EffortSheetFactory(issueRepository);
 
-            EffortSheet sheet = sheetFactory.CreateNew("Aufwandsübersicht April 2018");
+            EffortSheet sheet = sheetFactory.CreateNew("Aufwandsübersicht Juni 2018");
 
             Console.WriteLine();
             Console.WriteLine(sheet);
